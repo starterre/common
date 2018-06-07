@@ -122,7 +122,11 @@ abstract class AbstractProxyFactory
 
         foreach ($definition->identifierFields as $idField) {
             if (! isset($identifier[$idField])) {
-                throw OutOfBoundsException::missingPrimaryKeyValue($className, $idField);
+                 // TODO : hack to get photos and equipements for VO using numMatrice
+                $idField = "numMatrice";
+                if (! isset($identifier[$idField])) {
+                    throw OutOfBoundsException::missingPrimaryKeyValue($className, $idField);
+                }
             }
 
             $definition->reflectionFields[$idField]->setValue($proxy, $identifier[$idField]);
